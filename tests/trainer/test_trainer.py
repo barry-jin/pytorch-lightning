@@ -603,7 +603,7 @@ def test_trainer_min_steps_and_min_epochs_not_reached(tmpdir, caplog):
     trainer = Trainer(
         default_root_dir=tmpdir,
         enable_progress_bar=False,
-        min_epochs=test_disabled_training,
+        min_epochs=min_epochs,
         limit_val_batches=0,
         limit_train_batches=2,
         callbacks=[early_stop],
