@@ -810,7 +810,7 @@ def test_iterable_dataset_stop_iteration_at_epoch_beginning(yield_at_all):
     trainer.fit(model, train_dataloaders=train_dataloader)
     assert trainer.global_step == 2 * yield_at_all
     # we expect the second epoch to be skipped
-    assert trainer.current_epoch == 1
+    assert trainer.current_epoch == int(yield_at_all)
 
 
 class DistribSamplerCallback(Callback):
