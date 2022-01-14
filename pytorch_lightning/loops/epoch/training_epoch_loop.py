@@ -88,7 +88,7 @@ class TrainingEpochLoop(loops.Loop[_OUTPUTS_TYPE]):
         """Returns the current batch index (within this epoch)"""
         # use `ready` instead of `completed` in case this is accessed after `completed` has been increased
         # but before the next `ready` increase
-        return max(self.batch_progress.current.ready - 1, 0)
+        return self.batch_progress.current.ready - 1
 
     @property
     def _is_training_done(self) -> bool:
@@ -142,7 +142,7 @@ class TrainingEpochLoop(loops.Loop[_OUTPUTS_TYPE]):
 
     def on_run_start(self, data_fetcher: AbstractDataFetcher) -> None:  # type: ignore[override]
         self._reload_dataloader_state_dict(data_fetcher)
-        self._dataloader_iter = _update_dataloader_iter(data_fetcher, self.batch_idx)
+        self._dataloader_iter = _update_dataloader_iter(data_fetcher, self.batch_idx + 1)
 
     def advance(self, data_fetcher: AbstractDataFetcher) -> None:  # type: ignore[override]
         """Runs a single training batch.
