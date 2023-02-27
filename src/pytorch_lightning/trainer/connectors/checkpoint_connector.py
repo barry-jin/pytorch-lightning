@@ -90,7 +90,7 @@ class CheckpointConnector:
         ## Add jitter to unblock accessing checkpoints at same time for 5000+ GPUs
         cur_rank = int(os.environ.get("RANK", 0))
         cur_num_nodes = int(os.environ.get("NUM_NODES", 0))
-        sleep_time = (cur_rank // cur_num_nodes) * 180
+        sleep_time = (cur_rank // 128) * 180
         log.detail(f"Currently using {cur_num_nodes} nodes. Rank - {cur_rank} will sleep {sleep_time} seconds")
         time.sleep(sleep_time)
         with pl_legacy_patch():
