@@ -88,8 +88,8 @@ class CheckpointConnector:
 
         rank_zero_info(f"Restoring states from the checkpoint path at {checkpoint_path}")
         ## Add jitter to unblock accessing checkpoints at same time for 5000+ GPUs
-        cur_rank = os.environ.get("RANK", 0)
-        cur_num_nodes = os.environ.get("NUM_NODES", 0)
+        cur_rank = int(os.environ.get("RANK", 0))
+        cur_num_nodes = int(os.environ.get("NUM_NODES", 0))
         sleep_time = (cur_rank // cur_num_nodes) * 180
         log.detail(f"Currently using {cur_num_nodes} nodes. Rank - {cur_rank} will sleep {sleep_time} seconds")
         time.sleep(sleep_time)
